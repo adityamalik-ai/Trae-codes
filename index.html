@@ -8,7 +8,31 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="pw-live-theme">
-    <div class="app-layout">
+    <!-- Role Selector Overlay -->
+    <div id="roleSelector" class="overlay">
+        <div class="role-card">
+            <div class="logo-pw">
+                <img src="https://img.icons8.com/color/48/000000/infinity.png" alt="logo" width="32">
+                <span>PW<span>.live</span></span>
+            </div>
+            <h2>Welcome to PW.live</h2>
+            <p>Select your workspace role to begin</p>
+            <div class="role-buttons">
+                <button onclick="selectRole('manager')" class="btn btn-primary role-btn">
+                    <i class="ph ph-briefcase"></i>
+                    <span>Manager Dashboard</span>
+                    <small>Overview of team & reports</small>
+                </button>
+                <button onclick="selectRole('employee')" class="btn btn-outline role-btn">
+                    <i class="ph ph-clock"></i>
+                    <span>Employee Tracker</span>
+                    <small>Track your work & tasks</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-layout" style="display: none;">
         <!-- Sidebar Navigation -->
         <aside class="app-sidebar">
             <div class="sidebar-logo">
@@ -18,42 +42,64 @@
                 </div>
             </div>
             
-            <div class="nav-section">
-                <span class="nav-label">DASHBOARD</span>
-                <nav class="sidebar-nav">
-                    <a href="#" class="nav-item active">
-                        <i class="ph-fill ph-squares-four"></i>
-                        <span>Overview</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="ph ph-user"></i>
-                        <span>Employees</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i class="ph ph-chart-line-up"></i>
-                        <span>Reports</span>
-                    </a>
-                </nav>
+            <div id="managerNav">
+                <div class="nav-section">
+                    <span class="nav-label">DASHBOARD</span>
+                    <nav class="sidebar-nav">
+                        <a href="#" class="nav-item active">
+                            <i class="ph-fill ph-squares-four"></i>
+                            <span>Overview</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="ph ph-user"></i>
+                            <span>Employees</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="ph ph-chart-line-up"></i>
+                            <span>Reports</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-label">CONFIG</span>
+                    <nav class="sidebar-nav">
+                        <a href="#" class="nav-item">
+                            <i class="ph ph-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </nav>
+                </div>
             </div>
 
-            <div class="nav-section">
-                <span class="nav-label">CONFIG</span>
-                <nav class="sidebar-nav">
-                    <a href="#" class="nav-item">
-                        <i class="ph ph-gear"></i>
-                        <span>Settings</span>
-                    </a>
-                </nav>
+            <div id="employeeNav" style="display: none;">
+                <div class="nav-section">
+                    <span class="nav-label">MY WORK</span>
+                    <nav class="sidebar-nav">
+                        <a href="#" class="nav-item active">
+                            <i class="ph ph-clock"></i>
+                            <span>My Tracker</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="ph ph-monitor"></i>
+                            <span>My Screenshots</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="ph ph-calendar-check"></i>
+                            <span>My Attendance</span>
+                        </a>
+                    </nav>
+                </div>
             </div>
 
             <div class="sidebar-footer">
                 <div class="user-profile">
-                    <div class="avatar">AM</div>
+                    <div id="userAvatar" class="avatar">AM</div>
                     <div class="user-meta">
-                        <span class="user-name">Aditya Malik</span>
-                        <span class="user-role">Manager · @pw.live</span>
+                        <span id="userName" class="user-name">Aditya Malik</span>
+                        <span id="userRoleLabel" class="user-role">Manager · @pw.live</span>
                     </div>
-                    <button class="logout-btn"><i class="ph ph-sign-out"></i></button>
+                    <button onclick="logout()" class="logout-btn"><i class="ph ph-sign-out"></i></button>
                 </div>
             </div>
         </aside>
@@ -63,14 +109,14 @@
             <!-- Top Header Status Bar -->
             <header class="app-header">
                 <div class="header-left">
-                    <h2 class="page-title">Team overview</h2>
+                    <h2 id="headerTitle" class="page-title">Team overview</h2>
                 </div>
                 <div class="header-right">
                     <div class="status-item date" id="liveDate">Wed, 25 Mar, 2026</div>
                     <div class="status-item clock" id="liveClock">16:18:09 IST</div>
                     <div class="status-item session-time">
                         <i class="ph ph-timer"></i>
-                        <span id="sessionClock">02:34:54 pm</span>
+                        <span id="sessionClock">00:00:00</span>
                     </div>
                     <button class="btn btn-refresh" id="refreshBtn">
                         <i class="ph ph-arrows-counter-clockwise"></i> Refresh data
@@ -80,12 +126,13 @@
 
             <!-- Scrollable Content -->
             <div class="content-scrollable">
-                <div class="dashboard-container">
+                <!-- MANAGER VIEW -->
+                <div id="managerDashboard" class="dashboard-container">
                     <!-- Gradient Greeting Card -->
                     <div class="greeting-card">
                         <div class="greeting-content">
                             <h1 id="greetingText">Good afternoon 🌤️</h1>
-                            <p class="greeting-sub">Aditya — <span id="fullDate">Wednesday, 25 March</span></p>
+                            <p class="greeting-sub"><span id="greetUserName">Aditya</span> — <span id="fullDate">Wednesday, 25 March</span></p>
                             <div class="quote-box">
                                 <p>"The best preparation for tomorrow is doing your best today."</p>
                                 <span>— H. Jackson Brown Jr.</span>
@@ -99,34 +146,99 @@
                         <i class="ph-fill ph-check-square"></i>
                         <div class="alert-content">
                             <strong><span id="employeeCount">3</span> employees found — <span id="liveCount">1</span> live</strong>
-                            <p>Auto-refreshes on BroadcastChannel. Click Refresh for full reload.</p>
+                            <p>Auto-refreshes on BroadcastChannel. Data synced across all tabs.</p>
                         </div>
                     </div>
 
                     <!-- Instructions Box -->
                     <div class="instruction-box" id="instructionBox">
                         <div class="box-header">
-                            <span class="box-title">📋 How to see employees here</span>
+                            <span class="box-title">📋 Live Simulation Guide</span>
                             <button class="close-btn" onclick="document.getElementById('instructionBox').style.display='none'">&times;</button>
                         </div>
                         <div class="box-body">
-                            <p><strong>Same browser, same device (current setup):</strong></p>
+                            <p><strong>To see real-time tracking in action:</strong></p>
                             <ol>
-                                <li>Open this same HTML file in a <strong>new Chrome tab</strong></li>
-                                <li>Sign in as <strong>Employee</strong> (any @pw.live username, password: <code>PW@2026</code>)</li>
-                                <li>Mark attendance → click <strong>Start tracking</strong> → log some domains</li>
-                                <li>Come back here → data appears automatically every 5 seconds</li>
+                                <li>Open this same HTML file in a <strong>new tab</strong>.</li>
+                                <li>In the new tab, select the <strong>Employee Tracker</strong> role.</li>
+                                <li>Click <strong>Start Tracking</strong> in the employee tab.</li>
+                                <li>Watch this <strong>Manager Dashboard</strong> update live (no refresh needed)!</li>
                             </ol>
-                            <div class="warning-note">
-                                <i class="ph ph-warning"></i>
-                                <span><strong>Important:</strong> Both tabs must open the <em>exact same file</em> from the <em>same local path</em>. If one tab uses a different path, they won't share storage.</span>
-                            </div>
                         </div>
                     </div>
 
                     <!-- Employee Grid -->
                     <div class="employee-grid" id="employeeGrid">
                         <!-- Employee cards will be dynamically injected here -->
+                    </div>
+                </div>
+
+                <!-- EMPLOYEE VIEW -->
+                <div id="employeeDashboard" class="dashboard-container" style="display: none;">
+                    <div class="tracker-layout">
+                        <!-- Tracking Controls -->
+                        <div class="card tracker-widget">
+                            <div class="widget-header">
+                                <div class="project-info">
+                                    <i class="ph ph-briefcase"></i>
+                                    <select id="taskSelect" class="clean-select">
+                                        <option>Internal Development</option>
+                                        <option>Client: Acme Corp</option>
+                                        <option>Bug Fixing</option>
+                                    </select>
+                                </div>
+                                <span id="trackStatus" class="status-pill idle">Idle</span>
+                            </div>
+                            
+                            <div class="widget-timer">
+                                <h1 id="empTimer">00:00:00</h1>
+                                <p>Today: <span id="empTotalTracked">4h 20m</span></p>
+                            </div>
+
+                            <div class="widget-actions">
+                                <button id="empTrackBtn" class="btn btn-primary btn-xl">
+                                    <i class="ph ph-play"></i> Start Tracking
+                                </button>
+                                <button id="empAttendanceBtn" class="btn btn-outline btn-xl">
+                                    <i class="ph ph-calendar-check"></i> Mark Attendance
+                                </button>
+                            </div>
+
+                            <div class="widget-stats">
+                                <div class="w-stat">
+                                    <span class="label">Keyboard</span>
+                                    <div class="progress-bar-mini"><div id="kbActivity" class="fill" style="width: 0%"></div></div>
+                                    <span id="kbVal" class="val">0%</span>
+                                </div>
+                                <div class="w-stat">
+                                    <span class="label">Mouse</span>
+                                    <div class="progress-bar-mini"><div id="mouseActivity" class="fill" style="width: 0%"></div></div>
+                                    <span id="mouseVal" class="val">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Screenshots & Logs -->
+                        <div class="tracker-sidebar">
+                            <div class="card screenshots-log">
+                                <h3>Last Screenshot</h3>
+                                <div class="screenshot-preview">
+                                    <div class="sh-overlay">
+                                        <i class="ph ph-camera"></i>
+                                        <span>Capturing at intervals...</span>
+                                    </div>
+                                    <img id="lastScreenshotImg" src="" style="display: none;">
+                                </div>
+                                <p class="sh-timer">Next capture in <span id="nextCapture">5m</span></p>
+                            </div>
+
+                            <div class="card activity-mini-log">
+                                <h3>Recent Activity</h3>
+                                <div id="activityLog" class="activity-feed">
+                                    <p class="empty-msg">No tracking activity yet.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
