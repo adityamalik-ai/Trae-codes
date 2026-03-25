@@ -3,221 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebWork Tracker - Reference UI</title>
+    <title>PW.live - Team Overview</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Using Phosphor Icons for a modern look -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body class="webwork-theme">
+<body class="pw-live-theme">
     <div class="app-layout">
         <!-- Sidebar Navigation -->
         <aside class="app-sidebar">
             <div class="sidebar-logo">
-                <div class="logo-box">WW</div>
-                <span class="logo-text">WebWork</span>
+                <div class="logo-pw">
+                    <img src="https://img.icons8.com/color/48/000000/infinity.png" alt="logo" width="24">
+                    <span>PW<span>.live</span></span>
+                </div>
             </div>
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active">
-                    <i class="ph-fill ph-gauge"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="ph ph-clock"></i>
-                    <span>Time Tracking</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="ph ph-monitor"></i>
-                    <span>Screenshots</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="ph ph-chart-bar"></i>
-                    <span>Reports</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="ph ph-users-three"></i>
-                    <span>Team</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="ph ph-folder"></i>
-                    <span>Projects</span>
-                </a>
-            </nav>
+            
+            <div class="nav-section">
+                <span class="nav-label">DASHBOARD</span>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active">
+                        <i class="ph-fill ph-squares-four"></i>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="ph ph-user"></i>
+                        <span>Employees</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="ph ph-chart-line-up"></i>
+                        <span>Reports</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-label">CONFIG</span>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item">
+                        <i class="ph ph-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+            </div>
+
             <div class="sidebar-footer">
-                <div class="user-profile-brief">
+                <div class="user-profile">
                     <div class="avatar">AM</div>
-                    <div class="user-info">
+                    <div class="user-meta">
                         <span class="user-name">Aditya Malik</span>
-                        <span class="user-role">Administrator</span>
+                        <span class="user-role">Manager · @pw.live</span>
                     </div>
+                    <button class="logout-btn"><i class="ph ph-sign-out"></i></button>
                 </div>
             </div>
         </aside>
 
         <!-- Main Workspace -->
         <div class="app-main">
-            <!-- Top Header -->
+            <!-- Top Header Status Bar -->
             <header class="app-header">
                 <div class="header-left">
-                    <h2 class="page-title">Real-time Tracking</h2>
+                    <h2 class="page-title">Team overview</h2>
                 </div>
                 <div class="header-right">
-                    <div class="project-selector">
-                        <i class="ph ph-briefcase"></i>
-                        <select id="projectSelect">
-                            <option>Internal Development</option>
-                            <option>Client: Acme Corp</option>
-                            <option>Marketing Campaign</option>
-                        </select>
+                    <div class="status-item date" id="liveDate">Wed, 25 Mar, 2026</div>
+                    <div class="status-item clock" id="liveClock">16:18:09 IST</div>
+                    <div class="status-item session-time">
+                        <i class="ph ph-timer"></i>
+                        <span id="sessionClock">02:34:54 pm</span>
                     </div>
-                    <button class="btn btn-icon"><i class="ph ph-bell"></i></button>
-                    <button class="btn btn-icon"><i class="ph ph-gear"></i></button>
+                    <button class="btn btn-refresh" id="refreshBtn">
+                        <i class="ph ph-arrows-counter-clockwise"></i> Refresh data
+                    </button>
                 </div>
             </header>
 
-            <!-- Scrollable Content Area -->
+            <!-- Scrollable Content -->
             <div class="content-scrollable">
-                <div class="dashboard-grid">
-                    
-                    <!-- Tracker Control Card -->
-                    <div class="card tracker-control-card">
-                        <div class="card-header">
-                            <span class="status-badge online"><i class="ph-fill ph-circle"></i> Tracking Now</span>
-                            <span class="current-date" id="currentDate">Mar 25, 2026</span>
-                        </div>
-                        <div class="timer-display">
-                            <h1 id="timer">04:20:15</h1>
-                            <p class="timer-label">Total time today</p>
-                        </div>
-                        <div class="tracker-actions">
-                            <button id="trackBtn" class="btn btn-large btn-danger">
-                                <i class="ph ph-stop"></i> Stop Tracking
-                            </button>
-                            <button id="attendanceBtn" class="btn btn-outline">
-                                <i class="ph ph-calendar-check"></i> Mark Attendance
-                            </button>
-                        </div>
-                        <div class="activity-meters">
-                            <div class="meter-item">
-                                <div class="meter-label">
-                                    <span>Keyboard activity</span>
-                                    <span class="meter-val">82%</span>
-                                </div>
-                                <div class="meter-bar"><div class="fill" style="width: 82%"></div></div>
+                <div class="dashboard-container">
+                    <!-- Gradient Greeting Card -->
+                    <div class="greeting-card">
+                        <div class="greeting-content">
+                            <h1 id="greetingText">Good afternoon 🌤️</h1>
+                            <p class="greeting-sub">Aditya — <span id="fullDate">Wednesday, 25 March</span></p>
+                            <div class="quote-box">
+                                <p>"The best preparation for tomorrow is doing your best today."</p>
+                                <span>— H. Jackson Brown Jr.</span>
                             </div>
-                            <div class="meter-item">
-                                <div class="meter-label">
-                                    <span>Mouse activity</span>
-                                    <span class="meter-val">45%</span>
-                                </div>
-                                <div class="meter-bar"><div class="fill" style="width: 45%"></div></div>
+                        </div>
+                        <div class="sun-decoration"></div>
+                    </div>
+
+                    <!-- Live Status Alert -->
+                    <div class="status-alert success">
+                        <i class="ph-fill ph-check-square"></i>
+                        <div class="alert-content">
+                            <strong><span id="employeeCount">3</span> employees found — <span id="liveCount">1</span> live</strong>
+                            <p>Auto-refreshes on BroadcastChannel. Click Refresh for full reload.</p>
+                        </div>
+                    </div>
+
+                    <!-- Instructions Box -->
+                    <div class="instruction-box" id="instructionBox">
+                        <div class="box-header">
+                            <span class="box-title">📋 How to see employees here</span>
+                            <button class="close-btn" onclick="document.getElementById('instructionBox').style.display='none'">&times;</button>
+                        </div>
+                        <div class="box-body">
+                            <p><strong>Same browser, same device (current setup):</strong></p>
+                            <ol>
+                                <li>Open this same HTML file in a <strong>new Chrome tab</strong></li>
+                                <li>Sign in as <strong>Employee</strong> (any @pw.live username, password: <code>PW@2026</code>)</li>
+                                <li>Mark attendance → click <strong>Start tracking</strong> → log some domains</li>
+                                <li>Come back here → data appears automatically every 5 seconds</li>
+                            </ol>
+                            <div class="warning-note">
+                                <i class="ph ph-warning"></i>
+                                <span><strong>Important:</strong> Both tabs must open the <em>exact same file</em> from the <em>same local path</em>. If one tab uses a different path, they won't share storage.</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Daily Summary Stats -->
-                    <div class="card summary-stats-card">
-                        <h3>Today's Progress</h3>
-                        <div class="stats-mini-grid">
-                            <div class="mini-stat">
-                                <span class="label">Productivity</span>
-                                <span class="value success">92%</span>
-                                <span class="trend up"><i class="ph ph-trend-up"></i> +5%</span>
-                            </div>
-                            <div class="mini-stat">
-                                <span class="label">Idle Time</span>
-                                <span class="value warning">12m</span>
-                                <span class="trend down"><i class="ph ph-trend-down"></i> -2m</span>
-                            </div>
-                            <div class="mini-stat">
-                                <span class="label">Work Domains</span>
-                                <span class="value info">85%</span>
-                                <span class="trend neutral">Stable</span>
-                            </div>
-                        </div>
-                        <div class="target-progress">
-                            <div class="progress-info">
-                                <span>Daily Target (7.5h)</span>
-                                <span id="targetPct">58%</span>
-                            </div>
-                            <div class="progress-bar-large"><div class="fill" style="width: 58%"></div></div>
-                        </div>
+                    <!-- Employee Grid -->
+                    <div class="employee-grid" id="employeeGrid">
+                        <!-- Employee cards will be dynamically injected here -->
                     </div>
-
-                    <!-- Recent Screenshot Placeholder -->
-                    <div class="card screenshot-card">
-                        <div class="card-header">
-                            <h3>Last Screenshot</h3>
-                            <span class="time-ago">2 min ago</span>
-                        </div>
-                        <div class="screenshot-placeholder">
-                            <div class="placeholder-overlay">
-                                <i class="ph ph-eye"></i>
-                                <span>Click to view</span>
-                            </div>
-                            <div class="screenshot-info-tag">
-                                <i class="ph ph-globe"></i> github.com/adityamalik...
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Activity Chart Placeholder -->
-                    <div class="card chart-card">
-                        <h3>Activity per Hour</h3>
-                        <div class="chart-placeholder">
-                            <!-- Visual representation of hourly bars -->
-                            <div class="chart-bars">
-                                <div class="bar" style="height: 20%"></div>
-                                <div class="bar" style="height: 45%"></div>
-                                <div class="bar active" style="height: 80%"></div>
-                                <div class="bar" style="height: 60%"></div>
-                                <div class="bar" style="height: 30%"></div>
-                                <div class="bar" style="height: 10%"></div>
-                            </div>
-                            <div class="chart-labels">
-                                <span>09:00</span><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Domain Log Table -->
-                    <div class="card table-card full-width">
-                        <div class="card-header">
-                            <h3>Website & App Usage</h3>
-                            <div class="card-actions">
-                                <button class="btn btn-sm btn-outline">View All</button>
-                            </div>
-                        </div>
-                        <table class="webwork-table">
-                            <thead>
-                                <tr>
-                                    <th>Application / Domain</th>
-                                    <th>Category</th>
-                                    <th>Duration</th>
-                                    <th>Activity Level</th>
-                                    <th>Last Active</th>
-                                </tr>
-                            </thead>
-                            <tbody id="domainBody">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Team Overview (Visible to Admins) -->
-                    <div class="card team-overview-card full-width">
-                        <div class="card-header">
-                            <h3>Team Snapshot</h3>
-                            <div class="team-filters">
-                                <span class="filter active">All (3)</span>
-                                <span class="filter">Online (2)</span>
-                                <span class="filter">Idle (1)</span>
-                            </div>
-                        </div>
-                        <div class="team-cards-grid" id="teamCards">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
