@@ -3,211 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PW Timetracker</title>
+    <title>WebWork Tracker - Reference UI</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Using Phosphor Icons for a modern look -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body>
-    <div class="container">
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Tracking Section -->
-            <section class="tracking-section">
-                <div class="tracking-status">
-                    <span class="status-badge idle">Idle</span>
-                    <h1 class="timer" id="timer">00:00:00</h1>
-                    <p class="status-msg">Start tracking to begin your session</p>
-                    <button class="btn btn-primary" id="trackBtn">Start Tracking</button>
-                    <div class="session-stats">
-                        <span>Active: <span id="activeTime">0m</span></span>
-                        <span>Idle: <span id="idleTime">0m</span></span>
-                    </div>
-                    <div class="daily-target">
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 0%"></div>
-                        </div>
-                        <span>0% of daily target (7.5h)</span>
+<body class="webwork-theme">
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-box">WW</div>
+                <span class="logo-text">WebWork</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="ph-fill ph-gauge"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-clock"></i>
+                    <span>Time Tracking</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-monitor"></i>
+                    <span>Screenshots</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-users-three"></i>
+                    <span>Team</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-folder"></i>
+                    <span>Projects</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile-brief">
+                    <div class="avatar">AM</div>
+                    <div class="user-info">
+                        <span class="user-name">Aditya Malik</span>
+                        <span class="user-role">Administrator</span>
                     </div>
                 </div>
-            </section>
+            </div>
+        </aside>
 
-            <!-- Attendance and Summary Section -->
-            <section class="summary-section">
-                <div class="card attendance-card">
-                    <button class="btn btn-secondary" id="attendanceBtn">Mark Attendance</button>
+        <!-- Main Workspace -->
+        <div class="app-main">
+            <!-- Top Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <h2 class="page-title">Real-time Tracking</h2>
                 </div>
-                <div class="card stats-card">
-                    <h3>Today's summary</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item">
-                            <span class="label">Total</span>
-                            <span class="value" id="totalTime">0h 0m</span>
-                            <span class="sub-label">Target: 7.5h</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="label">Score</span>
-                            <span class="value" id="prodScore">—</span>
-                            <span class="sub-label">Productivity</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="label">Idle</span>
-                            <span class="value" id="summaryIdle">0m</span>
-                            <span class="sub-label">0% of session</span>
-                        </div>
+                <div class="header-right">
+                    <div class="project-selector">
+                        <i class="ph ph-briefcase"></i>
+                        <select id="projectSelect">
+                            <option>Internal Development</option>
+                            <option>Client: Acme Corp</option>
+                            <option>Marketing Campaign</option>
+                        </select>
                     </div>
+                    <button class="btn btn-icon"><i class="ph ph-bell"></i></button>
+                    <button class="btn btn-icon"><i class="ph ph-gear"></i></button>
                 </div>
-            </section>
+            </header>
 
-            <!-- Productivity Score Section -->
-            <section class="productivity-section">
-                <div class="card productivity-card">
-                    <h3>Productivity score</h3>
-                    <div class="score-display">
-                        <div class="score-gauge">
-                            <span class="score-value">—</span>
+            <!-- Scrollable Content Area -->
+            <div class="content-scrollable">
+                <div class="dashboard-grid">
+                    
+                    <!-- Tracker Control Card -->
+                    <div class="card tracker-control-card">
+                        <div class="card-header">
+                            <span class="status-badge online"><i class="ph-fill ph-circle"></i> Tracking Now</span>
+                            <span class="current-date" id="currentDate">Mar 25, 2026</span>
                         </div>
-                        <div class="score-details">
-                            <span class="status-label">Not started</span>
-                            <p>Based on time tracked and domain categories</p>
-                            <div class="category-breakdown">
-                                <div class="category-item">
-                                    <span>Work domains</span>
-                                    <span class="pct">0%</span>
+                        <div class="timer-display">
+                            <h1 id="timer">04:20:15</h1>
+                            <p class="timer-label">Total time today</p>
+                        </div>
+                        <div class="tracker-actions">
+                            <button id="trackBtn" class="btn btn-large btn-danger">
+                                <i class="ph ph-stop"></i> Stop Tracking
+                            </button>
+                            <button id="attendanceBtn" class="btn btn-outline">
+                                <i class="ph ph-calendar-check"></i> Mark Attendance
+                            </button>
+                        </div>
+                        <div class="activity-meters">
+                            <div class="meter-item">
+                                <div class="meter-label">
+                                    <span>Keyboard activity</span>
+                                    <span class="meter-val">82%</span>
                                 </div>
-                                <div class="category-item">
-                                    <span>Neutral domains</span>
-                                    <span class="pct">0%</span>
+                                <div class="meter-bar"><div class="fill" style="width: 82%"></div></div>
+                            </div>
+                            <div class="meter-item">
+                                <div class="meter-label">
+                                    <span>Mouse activity</span>
+                                    <span class="meter-val">45%</span>
                                 </div>
-                                <div class="category-item">
-                                    <span>Distracting</span>
-                                    <span class="pct">0%</span>
-                                </div>
-                                <div class="category-item">
-                                    <span>Active time</span>
-                                    <span class="pct">0%</span>
-                                </div>
+                                <div class="meter-bar"><div class="fill" style="width: 45%"></div></div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <!-- Domain Logging Section -->
-            <section class="domain-section">
-                <div class="card domain-card">
-                    <p class="hint">Log time on each domain/tab. Known work domains (Gmail, GitHub, Notion…) are auto-categorised.</p>
-                    <p class="hint">Enter minutes spent, or use the bookmarklet for instant logging.</p>
-                    <div class="domain-table-container">
-                        <table class="domain-table">
+                    <!-- Daily Summary Stats -->
+                    <div class="card summary-stats-card">
+                        <h3>Today's Progress</h3>
+                        <div class="stats-mini-grid">
+                            <div class="mini-stat">
+                                <span class="label">Productivity</span>
+                                <span class="value success">92%</span>
+                                <span class="trend up"><i class="ph ph-trend-up"></i> +5%</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="label">Idle Time</span>
+                                <span class="value warning">12m</span>
+                                <span class="trend down"><i class="ph ph-trend-down"></i> -2m</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="label">Work Domains</span>
+                                <span class="value info">85%</span>
+                                <span class="trend neutral">Stable</span>
+                            </div>
+                        </div>
+                        <div class="target-progress">
+                            <div class="progress-info">
+                                <span>Daily Target (7.5h)</span>
+                                <span id="targetPct">58%</span>
+                            </div>
+                            <div class="progress-bar-large"><div class="fill" style="width: 58%"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Screenshot Placeholder -->
+                    <div class="card screenshot-card">
+                        <div class="card-header">
+                            <h3>Last Screenshot</h3>
+                            <span class="time-ago">2 min ago</span>
+                        </div>
+                        <div class="screenshot-placeholder">
+                            <div class="placeholder-overlay">
+                                <i class="ph ph-eye"></i>
+                                <span>Click to view</span>
+                            </div>
+                            <div class="screenshot-info-tag">
+                                <i class="ph ph-globe"></i> github.com/adityamalik...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Chart Placeholder -->
+                    <div class="card chart-card">
+                        <h3>Activity per Hour</h3>
+                        <div class="chart-placeholder">
+                            <!-- Visual representation of hourly bars -->
+                            <div class="chart-bars">
+                                <div class="bar" style="height: 20%"></div>
+                                <div class="bar" style="height: 45%"></div>
+                                <div class="bar active" style="height: 80%"></div>
+                                <div class="bar" style="height: 60%"></div>
+                                <div class="bar" style="height: 30%"></div>
+                                <div class="bar" style="height: 10%"></div>
+                            </div>
+                            <div class="chart-labels">
+                                <span>09:00</span><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Domain Log Table -->
+                    <div class="card table-card full-width">
+                        <div class="card-header">
+                            <h3>Website & App Usage</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-sm btn-outline">View All</button>
+                            </div>
+                        </div>
+                        <table class="webwork-table">
                             <thead>
                                 <tr>
-                                    <th>Domain</th>
+                                    <th>Application / Domain</th>
                                     <th>Category</th>
-                                    <th>Minutes</th>
-                                    <th>Time</th>
-                                    <th></th>
+                                    <th>Duration</th>
+                                    <th>Activity Level</th>
+                                    <th>Last Active</th>
                                 </tr>
                             </thead>
                             <tbody id="domainBody">
-                                <!-- Domains will appear here -->
-                                <tr>
-                                    <td colspan="5" class="empty-msg">No tabs logged yet. Start tracking, then log your active domains.</td>
-                                </tr>
+                                <!-- Populated by JS -->
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </section>
 
-            <!-- Activity Log Section -->
-            <section class="activity-section">
-                <div class="card activity-card">
-                    <h3>Activity log (today)</h3>
-                    <div id="activityLog" class="activity-list">
-                        <p class="empty-msg">No activity yet. Start tracking to record activity.</p>
+                    <!-- Team Overview (Visible to Admins) -->
+                    <div class="card team-overview-card full-width">
+                        <div class="card-header">
+                            <h3>Team Snapshot</h3>
+                            <div class="team-filters">
+                                <span class="filter active">All (3)</span>
+                                <span class="filter">Online (2)</span>
+                                <span class="filter">Idle (1)</span>
+                            </div>
+                        </div>
+                        <div class="team-cards-grid" id="teamCards">
+                            <!-- Populated by JS -->
+                        </div>
                     </div>
-                </div>
-            </section>
-        </main>
 
-        <!-- Sidebar / Dashboard Section -->
-        <aside class="dashboard-sidebar">
-            <div class="stats-overview">
-                <div class="stat-box">
-                    <span class="label">Employees tracked</span>
-                    <span class="value">0</span>
-                    <span class="sub">with saved data</span>
-                </div>
-                <div class="stat-box">
-                    <span class="label">Online now</span>
-                    <span class="value">0</span>
-                    <span class="sub">active in last 2 min</span>
-                </div>
-                <div class="stat-box">
-                    <span class="label">Avg productivity</span>
-                    <span class="value">—</span>
-                    <span class="sub">across team today</span>
-                </div>
-                <div class="stat-box">
-                    <span class="label">Total hours</span>
-                    <span class="value">0h</span>
-                    <span class="sub">tracked today</span>
                 </div>
             </div>
-
-            <div class="live-feed">
-                <h3>Live employee feed</h3>
-                <div class="feed-container" id="employeeFeed">
-                    <div class="empty-feed">
-                        <span class="icon">👥</span>
-                        <p>No employee data yet</p>
-                        <p class="sub">Employees need to sign in and start tracking. Cards will appear here automatically — no refresh needed.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="team-snapshot">
-                <h3>Today's team snapshot</h3>
-                <table class="team-table">
-                    <thead>
-                        <tr>
-                            <th>Employee</th>
-                            <th>Tracked</th>
-                            <th>Productivity</th>
-                            <th>Domains</th>
-                            <th>Attendance</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="teamSnapshotBody">
-                        <tr>
-                            <td colspan="6" class="empty-msg">No data yet</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="detailed-list">
-                <h3>Detailed employee list</h3>
-                <table class="team-table detailed">
-                    <thead>
-                        <tr>
-                            <th>Employee</th>
-                            <th>Tracked today</th>
-                            <th>Productivity</th>
-                            <th>Work domains</th>
-                            <th>Idle time</th>
-                            <th>Attendance</th>
-                            <th>Last seen</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detailedListBody">
-                        <tr>
-                            <td colspan="7" class="empty-msg">No data yet</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </aside>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
