@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PW Timetracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Tracking Section -->
+            <section class="tracking-section">
+                <div class="tracking-status">
+                    <span class="status-badge idle">Idle</span>
+                    <h1 class="timer" id="timer">00:00:00</h1>
+                    <p class="status-msg">Start tracking to begin your session</p>
+                    <button class="btn btn-primary" id="trackBtn">Start Tracking</button>
+                    <div class="session-stats">
+                        <span>Active: <span id="activeTime">0m</span></span>
+                        <span>Idle: <span id="idleTime">0m</span></span>
+                    </div>
+                    <div class="daily-target">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <span>0% of daily target (7.5h)</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance and Summary Section -->
+            <section class="summary-section">
+                <div class="card attendance-card">
+                    <button class="btn btn-secondary" id="attendanceBtn">Mark Attendance</button>
+                </div>
+                <div class="card stats-card">
+                    <h3>Today's summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="label">Total</span>
+                            <span class="value" id="totalTime">0h 0m</span>
+                            <span class="sub-label">Target: 7.5h</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Score</span>
+                            <span class="value" id="prodScore">—</span>
+                            <span class="sub-label">Productivity</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Idle</span>
+                            <span class="value" id="summaryIdle">0m</span>
+                            <span class="sub-label">0% of session</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Productivity Score Section -->
+            <section class="productivity-section">
+                <div class="card productivity-card">
+                    <h3>Productivity score</h3>
+                    <div class="score-display">
+                        <div class="score-gauge">
+                            <span class="score-value">—</span>
+                        </div>
+                        <div class="score-details">
+                            <span class="status-label">Not started</span>
+                            <p>Based on time tracked and domain categories</p>
+                            <div class="category-breakdown">
+                                <div class="category-item">
+                                    <span>Work domains</span>
+                                    <span class="pct">0%</span>
+                                </div>
+                                <div class="category-item">
+                                    <span>Neutral domains</span>
+                                    <span class="pct">0%</span>
+                                </div>
+                                <div class="category-item">
+                                    <span>Distracting</span>
+                                    <span class="pct">0%</span>
+                                </div>
+                                <div class="category-item">
+                                    <span>Active time</span>
+                                    <span class="pct">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Domain Logging Section -->
+            <section class="domain-section">
+                <div class="card domain-card">
+                    <p class="hint">Log time on each domain/tab. Known work domains (Gmail, GitHub, Notion…) are auto-categorised.</p>
+                    <p class="hint">Enter minutes spent, or use the bookmarklet for instant logging.</p>
+                    <div class="domain-table-container">
+                        <table class="domain-table">
+                            <thead>
+                                <tr>
+                                    <th>Domain</th>
+                                    <th>Category</th>
+                                    <th>Minutes</th>
+                                    <th>Time</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="domainBody">
+                                <!-- Domains will appear here -->
+                                <tr>
+                                    <td colspan="5" class="empty-msg">No tabs logged yet. Start tracking, then log your active domains.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Log Section -->
+            <section class="activity-section">
+                <div class="card activity-card">
+                    <h3>Activity log (today)</h3>
+                    <div id="activityLog" class="activity-list">
+                        <p class="empty-msg">No activity yet. Start tracking to record activity.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar / Dashboard Section -->
+        <aside class="dashboard-sidebar">
+            <div class="stats-overview">
+                <div class="stat-box">
+                    <span class="label">Employees tracked</span>
+                    <span class="value">0</span>
+                    <span class="sub">with saved data</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Online now</span>
+                    <span class="value">0</span>
+                    <span class="sub">active in last 2 min</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Avg productivity</span>
+                    <span class="value">—</span>
+                    <span class="sub">across team today</span>
+                </div>
+                <div class="stat-box">
+                    <span class="label">Total hours</span>
+                    <span class="value">0h</span>
+                    <span class="sub">tracked today</span>
+                </div>
+            </div>
+
+            <div class="live-feed">
+                <h3>Live employee feed</h3>
+                <div class="feed-container" id="employeeFeed">
+                    <div class="empty-feed">
+                        <span class="icon">👥</span>
+                        <p>No employee data yet</p>
+                        <p class="sub">Employees need to sign in and start tracking. Cards will appear here automatically — no refresh needed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-snapshot">
+                <h3>Today's team snapshot</h3>
+                <table class="team-table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Tracked</th>
+                            <th>Productivity</th>
+                            <th>Domains</th>
+                            <th>Attendance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamSnapshotBody">
+                        <tr>
+                            <td colspan="6" class="empty-msg">No data yet</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="detailed-list">
+                <h3>Detailed employee list</h3>
+                <table class="team-table detailed">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Tracked today</th>
+                            <th>Productivity</th>
+                            <th>Work domains</th>
+                            <th>Idle time</th>
+                            <th>Attendance</th>
+                            <th>Last seen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailedListBody">
+                        <tr>
+                            <td colspan="7" class="empty-msg">No data yet</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </aside>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
